@@ -1,0 +1,15 @@
+langchain
+langchain-core
+langchain-huggingface
+langchain-openai
+langchain-pinecone
+langchain-text-splitters
+langsmith
+openai
+pinecone
+pinecone-client
+pinecone-plugin-interface
+python-dotenv==1.0.1
+langgraph
+langchain_community
+wikipedia
