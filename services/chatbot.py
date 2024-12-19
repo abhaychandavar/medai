@@ -8,6 +8,9 @@ from . import vectorstore
 from config import Config
 from . import wikipedia
 from langgraph.prebuilt import create_react_agent
+from typing import AsyncIterable
+from langchain.callbacks import AsyncIteratorCallbackHandler
+import json
 
 class Chatbot:
     chat = None
@@ -69,6 +72,26 @@ class Chatbot:
                 )
         return agent
         
+    async def invoke_agent (query) -> AsyncIterable[dict[str, any]]:
+        agent = Chatbot.get_chatbot_agent()
+        if not isinstance(query, str):
+            raise ValueError("Query must be a string.")
+        query_dict = {
+            'messages': [
+                {
+                    'role': "user",
+                    'content': query,
+                },
+            ],
+        }
         
+        async for res in agent.astream(query_dict, stream_mode="values"):
+            last_message = res.get("messages", [])[-1]
+            print('LAST MESSAGE', last_message.type)
+            if last_message.type != 'ai': 
+                continue
+            yield json.dumps({
+                'content': last_message.content
+            })
         
 

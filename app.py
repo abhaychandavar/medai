@@ -1,3 +1,8 @@
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+import uvicorn
+from fastapi.responses import StreamingResponse
+
 from services.vectorstore import VectorStore
 from config import Config
 from services.embed import Embed
@@ -12,4 +17,21 @@ def main():
     agent = Chatbot.get_chatbot_agent()
     return agent
 
-chatbot = main()
+main()
+
+app = FastAPI()
+
+class QueryRequest(BaseModel):
+    query: str
+
+@app.post("/converse")
+@app.post("/converse")
+async def converse(request: QueryRequest):
+    try:
+        return StreamingResponse(Chatbot.invoke_agent(request.query), media_type="application/json")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+if __name__ == "__main__":
+    print('Running medAI')
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
