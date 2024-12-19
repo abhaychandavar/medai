@@ -10,3 +10,4 @@ class Config:
     PINECONE_INDEX_NAME = os.getenv("PINECONE_INDEX_NAME", "")
     QUERY_EMBED_MODEL_NAME = os.getenv("QUERY_EMBED_MODEL_NAME", "pritamdeka/S-BioBert-snli-multinli-stsb")
     CHATBOT_MODEL_NAME = os.getenv("CHATBOT_MODEL_NAME", "gpt-4")
+    PORT = os.getenv("PORT", 8080)
