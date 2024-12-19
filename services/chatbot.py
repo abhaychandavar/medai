@@ -67,15 +67,6 @@ class Chatbot:
                     If you don't know the answer just say you don't know the answer and you are still learning
                     '''
                 )
-        res = agent.invoke({
-            'messages': [
-                {
-                'role': "user",
-                'content': 'Why do I have fever?',
-                },
-            ],
-            })
-        print(res['messages'][len(res['messages']) - 1])
         return agent
         
         
