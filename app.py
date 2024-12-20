@@ -36,7 +36,7 @@ class QueryRequest(BaseModel):
 @app.post("/converse")
 async def converse(request: QueryRequest):
     try:
-        return StreamingResponse(Chatbot.invoke_agent(request.query), media_type="application/json")
+        return StreamingResponse(Chatbot.invoke_agent(request.query), media_type="text/plain")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

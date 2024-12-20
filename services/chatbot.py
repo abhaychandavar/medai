@@ -72,7 +72,7 @@ class Chatbot:
                 )
         return agent
         
-    async def invoke_agent (query) -> AsyncIterable[dict[str, any]]:
+    async def invoke_agent (query) -> AsyncIterable[str]:
         agent = Chatbot.get_chatbot_agent()
         if not isinstance(query, str):
             raise ValueError("Query must be a string.")
@@ -87,11 +87,9 @@ class Chatbot:
         
         async for res in agent.astream(query_dict, stream_mode="values"):
             last_message = res.get("messages", [])[-1]
-            print('LAST MESSAGE', last_message.type)
             if last_message.type != 'ai': 
                 continue
-            yield json.dumps({
-                'content': last_message.content
-            })
+            text = last_message.content
+            yield text
         
 
