@@ -8,6 +8,7 @@ from config import Config
 from services.embed import Embed
 from services.chatbot import Chatbot
 from services.wikipedia import Wikipedia
+
 def main():
     Wikipedia.init()
     Embed.init(Config.QUERY_EMBED_MODEL_NAME)
